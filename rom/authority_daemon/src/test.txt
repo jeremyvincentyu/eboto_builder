@@ -1,0 +1,2 @@
+secp256k1 unavailable, reverting to browser version
+{"privateKey":"0x04cd05cc6b37f4fc475d26b072e205d52dad6860e3a9ae07bd01ba9ca0adabe8","publicKey":"55162012b9c3392c63884bbca866f7f299a5d3b0f6beb6c3e95bd783cfe4b64d56e6d0d64192b22b1d5817dbda74f417ac90632016970ef7b9e5328e4dd49d93","address":"0x9b1E78bF0439C9C84DB64b699F5C6AceC822F06F"}

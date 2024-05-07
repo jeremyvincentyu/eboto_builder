@@ -1,0 +1,2 @@
+rsync -urv eboto_runtime/eboto_frontend/src/ eboto_builder/rom/eboto_frontend/src/ --exclude deployed_addresses.json --exclude EA_Account.json
+rsync -urv eboto_runtime/eboto_frontend/public/ eboto_builder/rom/eboto_frontend/public/ 

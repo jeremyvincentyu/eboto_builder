@@ -1,0 +1,1 @@
+clef --keystore ./data/keystore --configdir ./clef --chainid 12345 --suppress-bootwarn --rules ./src/rules.js
