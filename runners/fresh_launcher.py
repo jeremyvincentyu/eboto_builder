@@ -3,7 +3,9 @@ from time import sleep
 from threading import Thread
 
 #Eliminate any gunicorn instances taking up ports 5000 and 5001
-all_processes = subprocess.run("ps aux".split(),text=True).stdout.split("\n")
+all_process_subprocess = subprocess.run("ps aux".split(),text=True,capture_output=True)
+all_process_string = all_process_subprocess.stdout
+all_processes = all_process_string.split("\n")
 
 for every_process in all_processes:
     if "127.0.0.1:5001" in every_process or "127.0.0.1:5000" in every_process:
