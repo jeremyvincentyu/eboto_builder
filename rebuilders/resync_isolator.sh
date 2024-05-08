@@ -1,0 +1,1 @@
+rsync -urv eboto_builder/rom/isolator/src/ eboto_runtime/isolator/src/
