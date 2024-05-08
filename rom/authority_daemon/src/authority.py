@@ -67,6 +67,7 @@ def check_force_end(election_name: str):
     try:
         if request.get_json()["token"] != master_token:
             return "Not the EA"
+        print("Token Successfully Authenticated for Check Force End")
         return json.dumps(election_list.check_force_end(election_name))
     except:
         return "Malformed Request"

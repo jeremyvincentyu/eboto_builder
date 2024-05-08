@@ -115,6 +115,7 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
             },
             body: JSON.stringify({ "token": decrypted_auth_token })
         })
+        console.log(`Force end response is ${await force_end_response.text()}`)
         const force_end_completed: boolean = await force_end_response.json()
         force_end_finished = force_end_completed
     }

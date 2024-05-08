@@ -69,7 +69,7 @@ server {
 	}
 	
 	location /check_force_end{
-		proxy_pass http://127.0.0.1:5000/force_end_election;
+		proxy_pass http://127.0.0.1:5000/check_force_end;
 	}
 
 	location /sign_transaction{
