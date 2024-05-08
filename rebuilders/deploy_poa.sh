@@ -16,4 +16,4 @@ python3 poa/src/deploy.py
 
 #After the abi and new deployed address have been recopied into the frontend, rebuild the frontend
 cd eboto_frontend
-bash publish.sh
+bash publish.sh $1

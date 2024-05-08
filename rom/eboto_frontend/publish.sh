@@ -1,2 +1,2 @@
 npm run build
-sudo rsync -urv dist/ /var/www/html/
+echo $1 | sudo -S rsync -urv dist/ /var/www/html/
