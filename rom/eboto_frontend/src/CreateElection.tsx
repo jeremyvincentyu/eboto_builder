@@ -295,19 +295,21 @@ export default function CreateElection({ statusMessage, setStatusMessage, ethere
 
 
         //Add the election
+        setStatusMessage(`Adding ${electionName} to the smart contract`)
         await ethereum_wallet.current.contract.methods.createElection(electionName).send({ from: ea_address, gasPrice: "0" })
-
+    
         //Add the candidates
-        for (let counter = 0; counter < candidateRows.length; counter++) {
-            const current_row = candidateRows[counter]
+        for (const current_row of candidateRows) {
+            
             //console.log(current_row)
+            setStatusMessage(`Adding ${current_row.full_name} to ${electionName}`)
             await ethereum_wallet.current.contract.methods.addCandidatetoElection(current_row.role, electionName, current_row.full_name, current_row.id).send({ from: ea_address, gasPrice: "0" })
         }
 
         //Add the voters
 
-        for (let counter = 0; counter < selectiveVoterDatabase.length; counter++) {
-            const current_selective_row = selectiveVoterDatabase[counter]
+        for (const current_selective_row of selectiveVoterDatabase) {
+            setStatusMessage(`Setting the participation of ${current_selective_row.full_name} in ${electionName} to ${current_selective_row.selected}`)
             await ethereum_wallet.current.contract.methods.ChangeParticipation(current_selective_row.ethereum_address, electionName, current_selective_row.selected).send({ from: ea_address, gasPrice: "0" })
             //If the voter is selected to be part of the election, set the voter database
         }
@@ -329,6 +331,7 @@ export default function CreateElection({ statusMessage, setStatusMessage, ethere
         )
 
         //Store the Dates in the Authority Daemon
+        setStatusMessage(`Setting the start and end dates of ${electionName}`)
         const start_Date_string = startDate?.toString()
         const end_Date_string = endDate?.toString()
         const body = JSON.stringify({ start_Date_string, end_Date_string, "token": decrypted_auth_token })

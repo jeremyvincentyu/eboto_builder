@@ -1,4 +1,4 @@
-import { Box,Container, Typography, Grid, Button, Card } from "@mui/material"
+import { Box, Container, Typography, Grid, Button, Card } from "@mui/material"
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { MutableRefObject } from 'react'
 import { Web3, Contract, ContractAbi, Web3BaseWallet, Web3BaseWalletAccount } from 'web3'
@@ -98,16 +98,15 @@ interface ContractCandidate {
 }
 
 function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, ethereum_wallet, selected_election, setElectionResults }: ControlCardInterface) {
-    async function wait_force_end(){
+    async function wait_force_end() {
         const encrypted_auth_response: Response = await fetch("/get_authority_token")
         const encrypted_auth_packed: string = await encrypted_auth_response.text()
         const encrypted_auth_object = EthCrypto.cipher.parse(encrypted_auth_packed)
         const private_key = ethereum_wallet.current.account[0].privateKey
         const decrypted_auth_token = await EthCrypto.decryptWithPrivateKey(private_key, encrypted_auth_object)
-        let force_end_finished = false
+
 
         //Keep Asking if the force end is done. only when the force end is done should the promise be resolved
-        while (!force_end_finished){
         const force_end_response = await fetch(`/check_force_end/${selected_election.current}`, {
             method: "POST",
             headers: {
@@ -115,12 +114,18 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
             },
             body: JSON.stringify({ "token": decrypted_auth_token })
         })
-        console.log(`Force end response is ${await force_end_response.text()}`)
+
         const force_end_completed: boolean = await force_end_response.json()
-        force_end_finished = force_end_completed
+        if (force_end_completed) {
+            await download_results()
+            window.location.href = "#/view_results"
+        }
+
+        else {
+            setTimeout(wait_force_end, 5000)
+        }
     }
-    }
-    
+
     async function force_end_election() {
         const encrypted_auth_response: Response = await fetch("/get_authority_token")
         const encrypted_auth_packed: string = await encrypted_auth_response.text()
@@ -135,7 +140,6 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
             body: JSON.stringify({ "token": decrypted_auth_token })
         })
         await wait_force_end()
-        await download_results()
     }
 
     async function download_results() {
@@ -172,9 +176,8 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
                     () => {
                         //console.log(`Stopping the ${selected_election.current} election`)
                         //This code executes when an election is forcibly ended
-                        force_end_election().then(
-                            () => { window.location.href = "#/view_results" }
-                        )
+                        force_end_election()
+
                     },
                 view_election:
                     () => {
@@ -240,7 +243,7 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
 
                 <Grid item xs={12}>
                     <Button variant="contained" onClick={enroll_voter}>
-                        Edit Voters
+                        Enroll Voters
                     </Button>
                 </Grid>
 
@@ -272,11 +275,11 @@ export default function ElectionAuthorityUI({ setStatusMessage, ethereum_wallet,
             backgroundImage: `url("images/authority.png")`,
             backgroundRepeat: "no-repeat",
         }} maxWidth={false}>
-            
+
             <Grid container spacing={5}>
 
                 <Grid item xs={12}>
-                <BackBar back_function={() => { logout(ethereum_wallet) }} authority_bar={true}/>
+                    <BackBar back_function={() => { logout(ethereum_wallet) }} authority_bar={true} />
                 </Grid>
                 <Grid item xs={6}>
                     <VotersCard rows={rows} />

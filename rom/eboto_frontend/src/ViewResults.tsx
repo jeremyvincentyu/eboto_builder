@@ -27,7 +27,8 @@ export default function ViewResultUI({ electionResults }: { electionResults: Ele
                         justifyContent: "center",
                         display: "flex"
                 }} maxWidth={false}>
-                <BackBar back_function={()=>{window.location.href = "#/ea_select_election"}} authority_bar={true}/>                        <Card elevation={8} style={{ padding: "1em" }}>
+                        <BackBar back_function={() => { window.location.href = "#/ea_dashboard" }} authority_bar={true} />
+                        <Card elevation={8} style={{ padding: "1em" }}>
                                 <DataGrid
                                         rows={electionResults}
                                         columns={columns}

@@ -63,11 +63,12 @@ function VotersCard({ rows }: { rows: VoterRow[] }) {
 
 interface NewCardInterface {
     setRows: (newRows: (oldRows: VoterRow[]) => VoterRow[]) => void,
+    rows: VoterRow[],
     ethereum_wallet: MutableRefObject<PackedWallet>,
     setStatusMessage: (newMessage: string) => void
 }
 
-function NewCard({ setRows, ethereum_wallet, setStatusMessage }: NewCardInterface) {
+function NewCard({ setRows, rows, ethereum_wallet, setStatusMessage }: NewCardInterface) {
     type status_setter = (newMessage: string) => void
     async function enrollVoter(ethereum_wallet: MutableRefObject<PackedWallet>, full_name: string, address: string, pubkey: string, setStatusMessage: status_setter) {
         const salt_array = new Uint32Array(5)
@@ -78,7 +79,17 @@ function NewCard({ setRows, ethereum_wallet, setStatusMessage }: NewCardInterfac
         const ea_address = ethereum_wallet.current.account[0].address
         const encrypted_name_object = await EthCrypto.encryptWithPublicKey(public_key, salted_name_string)
         const encrypted_name_string = EthCrypto.cipher.stringify(encrypted_name_object)
-
+        
+        //Check that newVoterAdress is not yet in any row
+        for (const row of rows){
+            if (address === row.eth_address){
+                setStatusMessage("This address is already associated with a voter.")
+                setnewVoterName("")
+                setnewVoterAddress("")
+                setnewVoterPubkey("")
+                return
+            }
+        }
         try {
             const derived_address = EthCrypto.publicKey.toAddress(pubkey)
             if (derived_address !== address) { setStatusMessage("Either Address or Pubkey is malformed") }
@@ -100,7 +111,7 @@ function NewCard({ setRows, ethereum_wallet, setStatusMessage }: NewCardInterfac
     const [newVoterPubkey, setnewVoterPubkey] = useState("")
     const voterfile = useRef<HTMLInputElement | null>()
     const addNewVoter = () => {
-
+        
         enrollVoter(ethereum_wallet, newVoterName, newVoterAddress, newVoterPubkey, setStatusMessage).then(() => {
 
         })
@@ -178,7 +189,7 @@ export default function EnrollVoterUI({ rows, setRows, ethereum_wallet }: Enroll
             </Grid>
 
             <Grid item xs={6}>
-                <NewCard setRows={setRows} ethereum_wallet={ethereum_wallet} setStatusMessage={setStatusMessage} />
+                <NewCard rows={rows} setRows={setRows} ethereum_wallet={ethereum_wallet} setStatusMessage={setStatusMessage} />
             </Grid>
 
             <Grid item xs={6}>

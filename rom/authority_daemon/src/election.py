@@ -261,7 +261,7 @@ class Election:
         self.tallying_thread.start()
     
     def check_force_end(self):
-        print(f"Successfuly Descended into Election {self.election_name} to check for force end")
+        #print(f"Successfuly Descended into Election {self.election_name} to check for force end")
         if self.force_tallying_done:
             self.tallying_thread.join()
         return self.force_tallying_done
