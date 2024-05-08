@@ -29,6 +29,8 @@ system(erase_old_elections)
 erase_old_list = "rm isolator/data/election_list.json"
 system(erase_old_list)
 
+#
+
 #Return to the superfolder
 chdir(superfolder)
 
