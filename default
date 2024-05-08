@@ -165,6 +165,10 @@ server {
 		proxy_pass http://127.0.0.1:5001/get_election_result;
 	}
 
+	location /submit_timelog{
+		proxy_pass http://127.0.0.1:5002/submit_timelog;
+	}
+
 	# pass PHP scripts to FastCGI server
 	#
 	#location ~ \.php$ {

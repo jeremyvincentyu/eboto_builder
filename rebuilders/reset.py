@@ -29,7 +29,9 @@ system(erase_old_elections)
 erase_old_list = "rm isolator/data/election_list.json"
 system(erase_old_list)
 
-#
+#Remove the old times from the logger
+erase_old_logs = "rm logger/data/*"
+system(erase_old_logs)
 
 #Return to the superfolder
 chdir(superfolder)

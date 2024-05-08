@@ -10,4 +10,4 @@ source bin/activate
 pip install -r requirements.txt
 
 #Setup the necessary subdirectories
-mkdir eboto_runtime/logger/data
+mkdir data

@@ -7,7 +7,7 @@ all_process_string = all_process_subprocess.stdout
 all_processes = all_process_string.split("\n")
 
 for every_process in all_processes:
-    if "127.0.0.1:5001" in every_process or "127.0.0.1:5000" in every_process:
+    if "127.0.0.1:5001" in every_process or "127.0.0.1:5000" in every_process or "127.0.0.1:5002" in every_process:
         pid = every_process.split()[1]
         subprocess.run(f"kill -SIGKILL {pid}".split())
 
@@ -34,3 +34,10 @@ def authority():
 
 authority_thread = Thread(target=authority)
 authority_thread.start()
+
+#Start the Logger Daemon in Another Thread
+def logger():
+    subprocess.run("bash eboto_builder/runners/logger.sh".split())
+
+logger_thread = Thread(target=logger)
+logger_thread.start()
