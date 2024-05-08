@@ -33,6 +33,10 @@ system(erase_old_list)
 erase_old_logs = "rm logger/data/*"
 system(erase_old_logs)
 
+#Remove the old private key from the tester
+erase_old_voter_keys = "rm /home/jeremy/Documents/eboto_runtime/testing/data/private_keys/*"
+system(erase_old_voter_keys)
+
 #Return to the superfolder
 chdir(superfolder)
 
