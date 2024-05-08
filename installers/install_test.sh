@@ -11,3 +11,7 @@ pip install -r requirements.txt
 
 #Install the Javascript Dependencies
 npm install
+
+#Makeup the necessary subdirectories
+mkdir data
+mkdir data/private_keys

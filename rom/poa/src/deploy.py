@@ -89,3 +89,15 @@ with open("isolator/data/ea_pubkey.json","w") as pubkey_file:
     pubkey_json = json.dumps(pubkey_dict)
     pubkey_file.write(pubkey_json)
 
+
+#Write the Authority Private Key into the Testing Data Folder
+with open("testing/data/authority.json","w") as authority_file:
+    authority_file.write(key_json)
+
+#Write the ABI into the Testing Data Folder
+with open("testing/data/abi.json","w") as abi_file:
+    abi_file.write(abi_string)
+
+#Write the Contract Address into the Testing Data Folder
+with open("testing/data/deployed_addresses.json","w") as deployment_file:
+    deployment_file.write(contract_json)
