@@ -2,6 +2,14 @@ import subprocess
 from time import sleep
 from threading import Thread
 
+#Eliminate any gunicorn instances taking up ports 5000 and 5001
+all_processes = subprocess.run("ps aux".split(),text=True).stdout.split("\n")
+
+for every_process in all_processes:
+    if "127.0.0.1:5001" in every_process or "127.0.0.1:5000" in every_process:
+        pid = every_process.split()[1]
+        subprocess.run(f"kill -SIGKILL {pid}".split())
+
 #Get the passwords
 geth_password = input("Set a password for geth and clef").strip()
 sudo_password = input("Enter the sudo password here").strip()

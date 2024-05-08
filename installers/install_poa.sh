@@ -11,10 +11,3 @@ pip install -r requirements.txt
 
 #Install the Javascript Dependencies
 npm install
-
-#Return to the superfolder
-cd ..
-cd ..
-
-#Run the poa reset script
-bash eboto_builder/rebuilders/reset_geth.sh

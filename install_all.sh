@@ -12,7 +12,7 @@ sudo cp eboto_builder/default /etc/nginx/sites-enabled/default
 sudo systemctl restart nginx
 
 #Start Geth and Deploy the contract
-echo "Run 'python3 runners/fresh_launcher.py' and supply the necessary passwords"
+echo "Run 'python3 eboto_builder/runners/fresh_launcher.py' and supply the necessary passwords"
 
 
 
