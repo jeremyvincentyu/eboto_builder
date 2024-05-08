@@ -98,6 +98,28 @@ interface ContractCandidate {
 }
 
 function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, ethereum_wallet, selected_election, setElectionResults }: ControlCardInterface) {
+    async function wait_force_end(){
+        const encrypted_auth_response: Response = await fetch("/get_authority_token")
+        const encrypted_auth_packed: string = await encrypted_auth_response.text()
+        const encrypted_auth_object = EthCrypto.cipher.parse(encrypted_auth_packed)
+        const private_key = ethereum_wallet.current.account[0].privateKey
+        const decrypted_auth_token = await EthCrypto.decryptWithPrivateKey(private_key, encrypted_auth_object)
+        let force_end_finished = false
+
+        //Keep Asking if the force end is done. only when the force end is done should the promise be resolved
+        while (!force_end_finished){
+        const force_end_response = await fetch(`/check_force_end/${selected_election.current}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ "token": decrypted_auth_token })
+        })
+        const force_end_completed: boolean = await force_end_response.json()
+        force_end_finished = force_end_completed
+    }
+    }
+    
     async function force_end_election() {
         const encrypted_auth_response: Response = await fetch("/get_authority_token")
         const encrypted_auth_packed: string = await encrypted_auth_response.text()
@@ -111,6 +133,7 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
             },
             body: JSON.stringify({ "token": decrypted_auth_token })
         })
+        await wait_force_end()
         await download_results()
     }
 

@@ -62,6 +62,14 @@ def force_end_election(election_name: str):
     except:
         return "Malformed Request"
 
+@app.route("/check_force_end/<election_name>",methods=["POST"])
+def check_force_end(election_name: str):
+    try:
+        if request.get_json()["token"] != master_token:
+            return "Not the EA"
+        return json.dumps(election_list.check_force_end(election_name))
+    except:
+        return "Malformed Request"
 
 #This should only be sent from the isolator
 @app.route("/sign_transaction",methods=["POST"])

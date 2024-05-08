@@ -1,1 +1,1 @@
-rsync -urv eboto_builder/rom/authority_daemon/src/ eboto_runtime/daemon/src/
+rsync -urv eboto_builder/rom/authority_daemon/src/ eboto_runtime/authority_daemon/src/

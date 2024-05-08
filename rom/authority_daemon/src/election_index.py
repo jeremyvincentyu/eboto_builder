@@ -66,8 +66,11 @@ class ElectionIndex:
     
     def force_end(self,election_name: str):
         print("Descended into election index")
-        self.election_list[election_name].end_and_tally()
+        self.election_list[election_name].force_end()
     
+    def check_force_end(self,election_name: str):
+        return self.election_list[election_name].check_force_end()
+
     def sign_transaction(self,election_name: str, some_transaction: str)-> str:
         return self.election_list[election_name].sign_single_transaction(some_transaction)
     

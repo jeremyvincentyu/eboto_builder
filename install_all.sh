@@ -8,7 +8,7 @@ bash eboto_builder/installers/install_isolator.sh
 bash eboto_builder/installers/install_authority.sh
 
 #Copy the nginx file and restart nginx
-sudo cp eboto_builder/default /etc/default/nginx
+sudo cp eboto_builder/default /etc/nginx/sites-enabled/default
 sudo systemctl restart nginx
 
 #Start Geth and Deploy the contract

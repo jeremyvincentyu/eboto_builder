@@ -31,7 +31,9 @@ class Election:
         self.private_key:str = private_key 
         self.election_results: dict[int,int] = {}
         self.web3_instance = web3_instance
-        
+        self.force_tallying_started = False
+        self.force_tallying_done = False
+        self.tallying_thread = Thread(target=self.end_and_tally)
         #Grab all the control keys
         self.allocated_keys: list[dict[str,str]] = []
         self.isolator = Isolator(self.election_name,self.private_key,self.contract)
@@ -135,6 +137,8 @@ class Election:
         for every_candidate in self.candidate_ids:
             self.contract.functions.set_election_results(self.election_name,every_candidate,self.election_results[every_candidate]).transact(TxParams({"gasPrice": Wei(0)}))
 
+        self.force_tallying_done = True
+
     def regenerate_ballot(self,control_key: dict[str,str]):
         voter_address = control_key["address"]
         decryption_key = control_key["private"]
@@ -172,7 +176,7 @@ class Election:
         self.mutex.acquire()
         #Check if current time has already exceeded end time. If so, end and tally. 
         election_time_up = current_time > end_date
-        if election_time_up:
+        if election_time_up and not self.force_tallying_started:
             self.end_and_tally()
             return False
 
@@ -251,3 +255,12 @@ class Election:
 
     def start_watching(self):
         self.watcher_thread.start()
+    
+    def force_end(self):
+        self.force_tallying_started = True
+        self.tallying_thread.start()
+    
+    def check_force_end(self):
+        if self.force_tallying_done:
+            self.tallying_thread.join()
+        return self.force_tallying_done
