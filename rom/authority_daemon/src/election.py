@@ -257,6 +257,8 @@ class Election:
         self.watcher_thread.start()
     
     def force_end(self):
+        if self.force_tallying_started:
+            return
         self.force_tallying_started = True
         self.tallying_thread.start()
     
@@ -265,3 +267,6 @@ class Election:
         if self.force_tallying_done:
             self.tallying_thread.join()
         return self.force_tallying_done
+
+    def unlock(self):
+        self.contract.functions.unlock_election(self.election_name).transact(TxParams({'gasPrice':Wei(0)}))

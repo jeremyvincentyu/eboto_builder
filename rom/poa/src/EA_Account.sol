@@ -27,6 +27,7 @@ contract EA_Account {
         string election_name;
         bool voter_visible;
         bool election_over;
+        bool flush_locked;
         uint[] candidate_list;
         mapping(uint => Candidate) candidate_store;
         mapping(address => string) voter_addresses_to_encrypted_control_keys;
@@ -127,6 +128,7 @@ contract EA_Account {
         new_election.election_name = election_name;
         new_election.voter_visible = false;
         new_election.election_over = false;
+        new_election.flush_locked = true;
         election_list.push(election_name);
     }
 
@@ -303,6 +305,14 @@ contract EA_Account {
         );
     }
 
+    //Unlocks the flush_locked lock and thereby allows transactions to be submitted
+    function unlock_election(string calldata election_name) external {
+        require(msg.sender == authority_address);
+        Election storage selected = all_elections[election_name];
+        selected.flush_locked = false;
+
+    }
+
     //Voter Functions
     function retrieve_control_key(
         string calldata election_name,
@@ -319,6 +329,7 @@ contract EA_Account {
         Election storage selected = all_elections[election_name];
         require(selected.authorized_control_addresses[msg.sender]);
         require(!selected.election_over);
+        require(!selected.flush_locked);
         selected.control_keys_to_histories[msg.sender].transactions.push(
             latest_transaction
         );

@@ -98,6 +98,12 @@ interface ContractCandidate {
 }
 
 function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, ethereum_wallet, selected_election, setElectionResults }: ControlCardInterface) {
+    async function post_tally_wait(){
+        await download_results()
+        window.location.href = "#/view_results"
+    }
+    
+    
     async function wait_force_end() {
         const encrypted_auth_response: Response = await fetch("/get_authority_token")
         const encrypted_auth_packed: string = await encrypted_auth_response.text()
@@ -117,10 +123,8 @@ function ControlCard({ setStatusMessage, setSelectiveDB, rows, setElectionList, 
 
         const force_end_completed: boolean = await force_end_response.json()
         if (force_end_completed) {
-            await download_results()
-            window.location.href = "#/view_results"
+            setTimeout(post_tally_wait,5000)
         }
-
         else {
             setTimeout(wait_force_end, 5000)
         }
