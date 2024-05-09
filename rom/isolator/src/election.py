@@ -124,7 +124,7 @@ class Election:
         requests.post("http://127.0.0.1/unlock_flushlock",json=body)
         
         #Wait 3 seconds to make sure that the flush lock was unlocked
-        sleep(3000)
+        sleep(3)
         if not self.flushing_started:
             for _,voter in self.voters.items():
                 voter.start_flushing()
