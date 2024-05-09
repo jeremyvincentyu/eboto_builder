@@ -267,3 +267,6 @@ class Election:
         if self.force_tallying_done:
             self.tallying_thread.join()
         return self.force_tallying_done
+
+    def unlock(self):
+        self.contract.functions.unlock_election(self.election_name).transact(TxParams({'gasPrice':Wei(0)}))

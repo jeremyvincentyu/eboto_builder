@@ -76,3 +76,6 @@ class ElectionIndex:
     
     def push_signature(self,election_name: str, control_address: str, signature: str):
         self.election_list[election_name].push_signature_to_chain(signature,control_address)
+    
+    def unlock(self, election_name: str):
+        self.election_list[election_name].unlock()

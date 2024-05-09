@@ -100,3 +100,17 @@ def push_signature():
         return "Done"
     except:
         return "Malformed Request"
+
+#This unlock command should also only be sent from the isolator
+@app.route("/unlock_flushlock",methods=["POST"])
+def unlock_flushlock():
+    global election_list
+    try:
+        parameters = request.get_json()
+        if parameters["isolator_token"] != isolator_token:
+            return "Not the isolator"
+        election_name = parameters["election_name"]
+        election_list.unlock(election_name)
+        return "Done"
+    except:
+        return "Malformed Request"
