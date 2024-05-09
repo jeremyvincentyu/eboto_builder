@@ -165,6 +165,10 @@ server {
 		proxy_pass http://127.0.0.1:5001/get_election_result;
 	}
 	
+	location /unlock_flushlock{
+		proxy_pass http://127.0.0.1:5000/unlock_flushlock;
+	}
+
 	# pass PHP scripts to FastCGI server
 	#
 	#location ~ \.php$ {

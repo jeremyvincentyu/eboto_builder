@@ -3,7 +3,10 @@ from hashlib import sha256
 from voter import Voter
 from hashlib import sha256
 from os import mkdir, path
+from time import sleep
 from protolist import ProtoList
+import requests
+
 #An election has a list of voter histories, indexed by voter addresses
 class Election:
     def __init__(self, election_name: str, threshold: str,all_elections: ProtoList, isolator_token: list[str]):
@@ -115,6 +118,13 @@ class Election:
     def flush(self):
         #In random order, transfer the transactions and signature histories of each voter into the blockchain, 
         #but do so in another thread
+        
+        #Unlock the Election by making a request to the authority daemon
+        body = {"isolator_token": self.isolator_token[0],"election_name": self.election_name}
+        requests.post("http://127.0.0.1/unlock_flushlock",json=body)
+        
+        #Wait 3 seconds to make sure that the flush lock was unlocked
+        sleep(3000)
         if not self.flushing_started:
             for _,voter in self.voters.items():
                 voter.start_flushing()
