@@ -72,14 +72,16 @@ function NewCard({selected_election, rows, setRows, ethereum_wallet}:NewCardInte
     <Card elevation = {8} style = {{padding: "1em"}} >
 
     <Grid container rowSpacing={5}>
+    
+    <Grid item xs={12}>
+    <TextField label="Name" value={newCandidateName} onChange={(e)=>setnewCandidateName(e.target.value)}/>
+    </Grid>
 
     <Grid item xs={12}>
     <TextField label="Role" value={newCandidateRole} onChange={(e)=>setnewCandidateRole(e.target.value)}/>
     </Grid>
 
-    <Grid item xs={12}>
-    <TextField label="Name" value={newCandidateName} onChange={(e)=>setnewCandidateName(e.target.value)}/>
-    </Grid>
+    
 
     <Grid item xs={12}>
     <Button variant="contained" onClick={addNewCandidate}> Add Candidate </Button>
