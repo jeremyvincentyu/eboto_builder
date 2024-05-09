@@ -85,7 +85,7 @@ export default function SelectElectionUI({ election_list }: SelectElectionInterf
         <Container sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/select.png")`,
+            backgroundImage: `url("images/select.jpeg")`,
             backgroundRepeat: "no-repeat",
             alignItems: "stretch",
             justifyContent: "center",

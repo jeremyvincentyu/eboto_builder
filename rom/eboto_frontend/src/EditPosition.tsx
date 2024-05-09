@@ -108,7 +108,7 @@ return (
 <Grid container rowSpacing={5} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/edit_position.png")`,
+            backgroundImage: `url("images/edit_position.jpeg")`,
             backgroundRepeat: "no-repeat",
         }}>
 <Grid item xs={12}>

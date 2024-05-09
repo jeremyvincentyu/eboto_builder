@@ -276,7 +276,7 @@ export default function ElectionAuthorityUI({ setStatusMessage, ethereum_wallet,
         <Container sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/authority.png")`,
+            backgroundImage: `url("images/authority.jpeg")`,
             backgroundRepeat: "no-repeat",
         }} maxWidth={false}>
 

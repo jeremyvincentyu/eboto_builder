@@ -99,7 +99,7 @@ export default function AddCandidateUI({selected_election,ethereum_wallet,rows,s
         <Grid container columnSpacing={20} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/add_candidate.png")`,
+            backgroundImage: `url("images/add_candidate.jpeg")`,
             backgroundRepeat: "no-repeat",
         }}>
         <BackBar back_function={()=>{window.location.href="#/modify_election"}} authority_bar={true}/>

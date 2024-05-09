@@ -21,7 +21,7 @@ export default function ViewResultUI({ electionResults }: { electionResults: Ele
                 <Container sx={{
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        backgroundImage: `url("images/view_results.png")`,
+                        backgroundImage: `url("images/view_results.jpeg")`,
                         backgroundRepeat: "no-repeat",
                         alignItems: "stretch",
                         justifyContent: "center",

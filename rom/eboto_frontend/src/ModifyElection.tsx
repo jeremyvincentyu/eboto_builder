@@ -125,7 +125,7 @@ export default function ModifyElectionUI({ selected_election, setCandidateList, 
         <Card elevation={8} style={{ padding: "1em" }} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/modify.png")`,
+            backgroundImage: `url("images/modify.jpeg")`,
             backgroundRepeat: "no-repeat",
             alignItems: "stretch",
             justifyContent: "center",
