@@ -10,8 +10,8 @@ from os import path
 from hashlib import sha256
 import requests
 import json
-
-
+from time import sleep
+from web3.exceptions import ContractLogicError
 
 class Voter:
     def __init__(self, keypair: dict[str,str], election_name: str, isolator_token: list[str]):
@@ -94,7 +94,12 @@ class Voter:
         self.transaction_lock.acquire()
         transaction =self.tx_history_deque.popleft()
         print(f"Now flushing transaction: {transaction}")
-        self.contract.functions.submit_voter_transaction(self.election_name,transaction).transact(TxParams({"gasPrice": Wei(0)}))
+        try:
+            self.contract.functions.submit_voter_transaction(self.election_name,transaction).transact(TxParams({"gasPrice": Wei(0)}))
+        except ContractLogicError as logic_error:
+            print(logic_error.data)
+        #Sleep for a quarter-second to give the chain time to rest
+        sleep(0.25)
         self.transaction_lock.release()
 
     def enqueue_signature(self, signature: str):

@@ -98,18 +98,23 @@ class Election:
         return self.voters[control_address].get_history_tx_length(auth_token)
     
     def submit_voter_transaction(self, control_address: str,transaction: str,auth_token: str)->str:
+        print("Entering Submit voter Transaction")
         total_participants = len(self.voters)
         remaining_unprocessed = self.count_unprocessed_transactions()
 
+        print("Checking if a flush shuld be done")
         #If the flushing already started and is close to finishing, turn down new transactions.
         if remaining_unprocessed < total_participants and self.flushing_started and self.all_elections.late_phase_imminent(self.election_name):
             #Turn down the transactions
             return "Wait"
-        
+
+        print("Trying to get transaction signed")
         signature = self.voters[control_address].voter_post_transaction(transaction,auth_token)
 
         #Every time a voter submits a transaction, check if the quota was reached.
         #If so, and if flushing has not begun yet, start flushing
+
+        print("Checking for quota")
         if self.quota_reached():
             self.flush()
 
@@ -120,14 +125,20 @@ class Election:
         #but do so in another thread
         
         #Unlock the Election by making a request to the authority daemon
+        print(f"Unlocking election {self.election_name}")
         body = {"isolator_token": self.isolator_token[0],"election_name": self.election_name}
         requests.post("http://127.0.0.1/unlock_flushlock",json=body)
         
-        #Wait 3 seconds to make sure that the flush lock was unlocked
-        sleep(3)
+        print("Waiting 5 seconds after unlock")
+        #Wait 5 seconds to make sure that the flush lock was unlocked
+        sleep(5)
+
+        print("Starting Per-voter Flusher Threads")
         if not self.flushing_started:
             for _,voter in self.voters.items():
                 voter.start_flushing()
+        
+        print("Done Starting Per-Voter Flusher Threads")
         self.flushing_started = True
 
     def count_unprocessed_transactions(self)->int:
