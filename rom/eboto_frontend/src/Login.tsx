@@ -1,5 +1,5 @@
-import { Input, Typography, Grid, Button, Modal, Card, Box, AppBar, MenuItem, Toolbar } from "@mui/material"
-import { useRef, useState, MutableRefObject } from 'react';
+import { Input, Typography, Grid, Button, Box, AppBar, MenuItem, Toolbar } from "@mui/material"
+import { useRef,  MutableRefObject } from 'react';
 import EthCrypto from 'eth-crypto';
 import { Web3, Contract, ContractAbi, Web3BaseWallet, Web3BaseWalletAccount } from 'web3'
 import post_body from "./post_body";
@@ -240,7 +240,6 @@ export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterEle
     //Create the filepicker
     //Login Once the file is chosen
     const keyfile = useRef<HTMLInputElement>(null);
-    const [popped, setPopped] = useState(false);
     const generated_key = useRef({ address: "", private_key: "", public_key: "" })
 
     function generate_account() {
@@ -248,7 +247,8 @@ export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterEle
         generated_key.current.private_key = account.privateKey;
         generated_key.current.public_key = EthCrypto.publicKeyByPrivateKey(generated_key.current.private_key)
         generated_key.current.address = EthCrypto.publicKey.toAddress(generated_key.current.public_key)
-        setPopped(true);
+        download_private_key()
+        download_public_key()
     }
 
     function download_private_key() {
@@ -287,28 +287,7 @@ export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterEle
             backgroundRepeat: "no-repeat",
         }}>
 
-            <Modal open={popped} onClose={() => { setPopped(false) }}>
-                <Card elevation={8} sx={{ margin: "10em" }}>
-                    <Box component="div" sx={{ ml: 50 }}>
-                        <Grid container rowSpacing={{ xs: 5 }}>
-
-                            <Grid item xs={12}>
-                                <Button variant="contained" onClick={download_private_key}>
-                                    Download Private Key
-                                </Button>
-                            </Grid>
-
-
-                            <Grid item xs={12}>
-                                <Button variant="contained" onClick={download_public_key}>
-                                    Download Public Key
-                                </Button>
-                            </Grid>
-
-                        </Grid>
-                    </Box>
-                </Card>
-            </Modal>
+         
             <TitleBar />
 
             <Grid container rowSpacing={{ xs: 10 }} sx={{
