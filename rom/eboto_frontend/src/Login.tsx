@@ -298,7 +298,7 @@ export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterEle
             <Grid container rowSpacing={{ xs: 10 }} sx={{
                                     backgroundSize: "contain",
                                     backgroundPosition: "center",
-                                    backgroundImage: `url("images/login_c.jpeg")`,
+                                    backgroundImage: `url("images/login_c.png")`,
                                     backgroundRepeat: "no-repeat",
                                     height: "20em"
             }}>
