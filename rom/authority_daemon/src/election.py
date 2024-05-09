@@ -257,6 +257,8 @@ class Election:
         self.watcher_thread.start()
     
     def force_end(self):
+        if self.force_tallying_started:
+            return
         self.force_tallying_started = True
         self.tallying_thread.start()
     
