@@ -73,7 +73,7 @@ export default function EditDurationUI({ startDate, endDate, setStartDate, setEn
         <Grid container rowSpacing={10} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/edit_duration.png")`,
+            backgroundImage: `url("images/edit_duration.jpeg")`,
             backgroundRepeat: "no-repeat",
         }}>
 

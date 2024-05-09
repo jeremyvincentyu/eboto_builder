@@ -356,7 +356,7 @@ export default function CreateElection({ statusMessage, setStatusMessage, ethere
         <Grid container rowSpacing={10} columnSpacing={20} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/create.png")`,
+            backgroundImage: `url("images/create.jpeg")`,
             backgroundRepeat: "no-repeat",
         }}>
             <Grid item xs={12}>

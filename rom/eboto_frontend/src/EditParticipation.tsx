@@ -188,7 +188,7 @@ export default function EditParticipationUI({ethereum_wallet, selected_election,
     <Grid container rowSpacing={10} sx={{
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundImage: `url("images/edit_participation.png")`,
+        backgroundImage: `url("images/edit_participation.jpeg")`,
         backgroundRepeat: "no-repeat",
         alignItems: "stretch",
         justifyContent: "center",

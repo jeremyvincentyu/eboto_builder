@@ -196,7 +196,7 @@ export default function BallotScreenUI({ ethereum_wallet, selected_election, sel
         <Grid container rowSpacing={15} sx={{
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/ballot_screen.png")`,
+            backgroundImage: `url("images/ballot_screen.jpeg")`,
             backgroundRepeat: "no-repeat",
             height: "40em"
         }}>

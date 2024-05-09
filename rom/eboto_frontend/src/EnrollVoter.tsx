@@ -178,7 +178,7 @@ export default function EnrollVoterUI({ rows, setRows, ethereum_wallet }: Enroll
         <Grid container columnSpacing={20} sx={{            
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundImage: `url("images/enroll.png")`,
+            backgroundImage: `url("images/enroll.jpeg")`,
             backgroundRepeat: "no-repeat",
             }}>
             <Grid item xs={12}>

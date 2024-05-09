@@ -185,7 +185,7 @@ export default function VoterSelectElectionUI({ selected_marker, setStatusMessag
         <Grid container rowSpacing={8} sx={{
             backgroundSize: "cover",
             backgroundPosition: "bottom",
-            backgroundImage: `url("images/voter_select.png")`,
+            backgroundImage: `url("images/voter_select.jpeg")`,
             backgroundRepeat: "no-repeat",
         }}>
             <Grid item xs={12}>
