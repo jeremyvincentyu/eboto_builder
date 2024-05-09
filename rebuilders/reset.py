@@ -29,6 +29,14 @@ system(erase_old_elections)
 erase_old_list = "rm isolator/data/election_list.json"
 system(erase_old_list)
 
+#Remove the old times from the logger
+erase_old_logs = "rm logger/data/*"
+system(erase_old_logs)
+
+#Remove the old private key from the tester
+erase_old_voter_keys = "rm -rf /home/jeremy/Documents/eboto_runtime/testing/data/private_keys/*"
+system(erase_old_voter_keys)
+
 #Return to the superfolder
 chdir(superfolder)
 

@@ -169,6 +169,10 @@ server {
 		proxy_pass http://127.0.0.1:5000/unlock_flushlock;
 	}
 
+	location /submit_timelog{
+		proxy_pass http://127.0.0.1:5002/submit_timelog;
+	}
+
 	# pass PHP scripts to FastCGI server
 	#
 	#location ~ \.php$ {

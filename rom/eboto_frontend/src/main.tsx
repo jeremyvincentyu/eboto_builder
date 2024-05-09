@@ -96,6 +96,12 @@ interface RolewithChoices {
     choice: number
 }
 
+interface TimeMetrics{
+    address: string,
+    login_time: string,
+    ticket_time: string
+}
+
 export default function MainRouter() {
     const contract_address = deployed_addresses["eBoto#EA_Account"]
     const abi = EA_Account_ABI
@@ -115,6 +121,7 @@ export default function MainRouter() {
             account: blank_account
         }
     );
+    const time_metrics = useRef<TimeMetrics>({address:"",login_time: "", ticket_time: ""})
     const selected_election = useRef("");
     const selected_marker = useRef("")
     const [voterDatabase, setVoterDatabase] = useState<VoterRow[]>([])
@@ -138,7 +145,7 @@ export default function MainRouter() {
 
                 <Route path="/" element={<WelcomeScreen />} />
 
-                <Route path="/login" element={<LoginUI ethereum_wallet={ethereum_wallet} setVoterDatabase={setVoterDatabase} setVoterElections={setVoterElections} />} />
+                <Route path="/login" element={<LoginUI ethereum_wallet={ethereum_wallet} setVoterDatabase={setVoterDatabase} setVoterElections={setVoterElections} time_metrics={time_metrics}/>} />
 
                 <Route path="/ea_dashboard" element={<ElectionAuthorityUI setStatusMessage={setStatusMessage} setElectionList={setElectionList} ethereum_wallet={ethereum_wallet} rows={voterDatabase} setSelectiveDB={setSelectiveVoterDatabase} selected_election={selected_election} setElectionResults={setElectionResults} />} />
 
@@ -164,7 +171,7 @@ export default function MainRouter() {
 
                 <Route path="/cheater_screen" element={<CheaterScreenUI statusMessage={statusMessage} setStatusMessage={setStatusMessage} activeKey={activeKey} setActiveKey={setActiveKey} votingKeys={votingKeys} setVotingKeys={setVotingKeys} revokedKeys={revokedKeys} ethereum_wallet={ethereum_wallet} selected_election={selected_election} selected_marker={selected_marker} setRolesWithChoices={setRolesWithChoices} />} />
 
-                <Route path="/ballot_screen" element={<BallotScreenUI ethereum_wallet={ethereum_wallet} selected_election={selected_election} selected_marker={selected_marker} rolesWithChoices={rolesWithChoices} setRolesWithChoices={setRolesWithChoices} ticket_contents={ticket_contents} />} />
+                <Route path="/ballot_screen" element={<BallotScreenUI ethereum_wallet={ethereum_wallet} selected_election={selected_election} selected_marker={selected_marker} rolesWithChoices={rolesWithChoices} setRolesWithChoices={setRolesWithChoices} ticket_contents={ticket_contents} time_metrics={time_metrics}/>} />
 
                 <Route path="/ticket_screen" element={<TicketScreenUI ticket_contents={ticket_contents} />} />
 

@@ -6,6 +6,7 @@ import post_body from "./post_body";
 import check_blockchain_available from "./blockchain_available";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import dayjs from "dayjs";
 
 interface PackedWallet {
     web3: Web3,
@@ -41,6 +42,8 @@ interface VoterRow {
     pubkey: string,
     elections_joined: string[]
 }
+
+
 
 type voterDatabaseSetter = (newVoterDatabase: (oldVoterDatabase: VoterRow[]) => VoterRow[]) => void
 
@@ -104,7 +107,7 @@ function switch_to_ea_view(keyfile: MutableRefObject<HTMLInputElement | null>, e
 
 type VoterElectionSetter = (newElections: (oldElections: string[]) => string[]) => void
 
-function switch_to_voter_view(keyfile: MutableRefObject<HTMLInputElement | null>, ethereum_wallet: MutableRefObject<PackedWallet>, setVoterElections: VoterElectionSetter) {
+function switch_to_voter_view(keyfile: MutableRefObject<HTMLInputElement | null>, ethereum_wallet: MutableRefObject<PackedWallet>, setVoterElections: VoterElectionSetter,time_metrics: MutableRefObject<TimeMetrics>) {
 
 
     async function bifurcated_check_voter_enrolled() {
@@ -170,8 +173,14 @@ function switch_to_voter_view(keyfile: MutableRefObject<HTMLInputElement | null>
         if (voter_enrolled) {
             //Get list of elections that voter is in
             const voter_elections: string[] = await bifurcated_get_voter_elections()
+            
             //Set Voter Elections to that value
             setVoterElections(() => { return voter_elections; })
+            window.location.href = "#/voter_select_election"
+
+            //Set the Login Time and Address
+            time_metrics.current.address = ethereum_wallet.current.account[0].address
+            time_metrics.current.login_time = dayjs().toString()
             window.location.href = "#/voter_select_election"
 
         }
@@ -188,7 +197,8 @@ function switch_to_voter_view(keyfile: MutableRefObject<HTMLInputElement | null>
 interface LoginInterface {
     ethereum_wallet: MutableRefObject<PackedWallet>,
     setVoterDatabase: voterDatabaseSetter,
-    setVoterElections: VoterElectionSetter
+    setVoterElections: VoterElectionSetter,
+    time_metrics: MutableRefObject<TimeMetrics>
 }
 
 
@@ -220,7 +230,13 @@ function TitleBar() {
     )
 }
 
-export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterElections }: LoginInterface) {
+interface TimeMetrics{
+    address: string,
+    login_time: string,
+    ticket_time: string
+}
+
+export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterElections, time_metrics }: LoginInterface) {
     //Create the filepicker
     //Login Once the file is chosen
     const keyfile = useRef<HTMLInputElement>(null);
@@ -320,7 +336,7 @@ export default function LoginUI({ ethereum_wallet, setVoterDatabase, setVoterEle
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                    <Button variant="contained" onClick={() => { switch_to_voter_view(keyfile, ethereum_wallet, setVoterElections) }} >
+                    <Button variant="contained" onClick={() => { switch_to_voter_view(keyfile, ethereum_wallet, setVoterElections, time_metrics) }} >
                         Log In as Voter
                     </Button>
                 </Grid>

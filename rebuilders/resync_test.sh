@@ -1,0 +1,1 @@
+rsync -urv eboto_builder/rom/testing/src/ eboto_runtime/testing/src/
