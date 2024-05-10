@@ -263,7 +263,7 @@ class Isolator:
                 # 4% chance of terminating: 0.96-1
                 else:
                     #The encrypted_ea_height is now known; post it to the blockchain
-                    salted_height = json.dumps({"height": str(len(all_transactions)), "salt": str(randbits(256))})
+                    salted_height = json.dumps({"height": str(len(all_transactions)), "salt": str(randbits(256))[:2+randbits(5)]})
                     ea_public_key = private2public(self.private_key)
                     encrypted_height = encrypt(ea_public_key,salted_height)
                     self.contract.functions.set_encrypted_ea_height(self.election_name,voter_address,encrypted_height).transact(TxParams({"gasPrice": Wei(0)}))
