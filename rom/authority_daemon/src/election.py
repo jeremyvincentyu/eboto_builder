@@ -173,7 +173,7 @@ class Election:
         start_date = parser.parse(dates["start_Date_string"])
         end_date = parser.parse(dates["end_Date_string"])
 
-        self.mutex.acquire()
+        
         #Check if current time has already exceeded end time. If so, end and tally. 
         election_time_up = current_time > end_date
         if election_time_up and not self.force_tallying_started:
@@ -193,7 +193,7 @@ class Election:
         if must_start_priming:
             self.prime_election()
 
-        self.mutex.release()
+        
         return True
     
     def prime_election(self):
