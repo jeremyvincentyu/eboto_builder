@@ -12,7 +12,7 @@ from dateutil.tz import tzutc
 from time import sleep
 from voter_replay import replay_history
 from voter import Voter
-from random import randint
+from random import randint, shuffle
 from pool_manager import allocate_accounts
 from isolator import Isolator
 
@@ -199,6 +199,7 @@ class Election:
     def prime_election(self):
         #Get all voters and identify which ones are part of the election 
         all_voters: list[tuple[str,str,str,list[str]]] = self.contract.functions.downloadVoterList().call()
+        shuffle(all_voters)
         structured_voters: dict[str,Voter] = {}
         for every_voter in all_voters:
             voter_address = every_voter[2]
