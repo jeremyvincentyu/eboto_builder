@@ -37,6 +37,7 @@ system(erase_old_logs)
 erase_old_voter_keys = "rm -rf /home/jeremy/Documents/eboto_runtime/testing/data/private_keys/*"
 system(erase_old_voter_keys)
 
+
 #Return to the superfolder
 chdir(superfolder)
 

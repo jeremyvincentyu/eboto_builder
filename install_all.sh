@@ -8,6 +8,7 @@ bash eboto_builder/installers/install_isolator.sh
 bash eboto_builder/installers/install_authority.sh
 bash eboto_builder/installers/install_test.sh
 bash eboto_builder/installers/install_logger.sh
+bash eboto_builder/installers/install_performance.sh
 
 #Copy the nginx file and restart nginx
 sudo cp eboto_builder/default /etc/nginx/sites-enabled/default

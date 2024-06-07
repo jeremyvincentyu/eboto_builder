@@ -69,6 +69,8 @@ with open("authority_daemon/src/EA_Account.json","w") as abi_file:
 with open("isolator/src/EA_Account.json","w") as abi_file:
     abi_file.write(abi_string)
 
+
+
 #Write the contract address into the isolator
 with open("isolator/src/deployed_addresses.json","w") as deployment_file:
     deployment_file.write(contract_json)
@@ -76,6 +78,7 @@ with open("isolator/src/deployed_addresses.json","w") as deployment_file:
 #Write the contract address into the authority daemon
 with open("authority_daemon/src/deployed_addresses.json","w") as deployment_file:
     deployment_file.write(contract_json)
+
 
 #Write the Authority Private Key into the Authority Daemon
 with open("authority_daemon/data/authority.json","w") as authority_file:
@@ -101,3 +104,16 @@ with open("testing/data/abi.json","w") as abi_file:
 #Write the Contract Address into the Testing Data Folder
 with open("testing/data/deployed_addresses.json","w") as deployment_file:
     deployment_file.write(contract_json)
+
+#Write the ABI into the data directory of the Performance Tester
+with open("performance/data/abi.json","w") as abi_file:
+    abi_file.write(abi_string)
+
+#Write the contract address into the data directory of the Performance Tester
+with open("performance/data/deployed_address es.json","w") as deployment_file:
+    deployment_file.write(contract_json)
+
+#Write the Authority Private Key into the Performance Testing Folder
+with open("performance/data/authority.json","w") as authority_file:
+    authority_file.write(key_json)
+
