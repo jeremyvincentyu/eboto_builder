@@ -34,7 +34,7 @@ class Authority:
             address_object = json.loads(address_string)
             actual_address  = self.web3_instance.to_checksum_address(address_object["eBoto#EA_Account"])
         
-        with open("abi.json","r") as abi_file:
+        with open("data/abi.json","r") as abi_file:
             abi_string = abi_file.read()
             actual_abi = json.loads(abi_string)
         

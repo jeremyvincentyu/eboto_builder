@@ -110,7 +110,7 @@ with open("performance/data/abi.json","w") as abi_file:
     abi_file.write(abi_string)
 
 #Write the contract address into the data directory of the Performance Tester
-with open("performance/data/deployed_address es.json","w") as deployment_file:
+with open("performance/data/deployed_addresses.json","w") as deployment_file:
     deployment_file.write(contract_json)
 
 #Write the Authority Private Key into the Performance Testing Folder
