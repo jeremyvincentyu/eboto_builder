@@ -16,7 +16,7 @@ from time import sleep
 
 def full_candidate_http(election_name: str, candidate_id: int):
     candidate_request_body = {"election_name": election_name,"candidate_id": str(candidate_id)}
-    candidate_request = requests.get("http://127.0.0.1/get_candidate_data", json = candidate_request_body)
+    candidate_request = requests.post("http://127.0.0.1/get_candidate_data", json = candidate_request_body)
     candidate_data = candidate_request.json()
 
     return Candidate(candidate_id,candidate_data["name"],candidate_data["role"])
