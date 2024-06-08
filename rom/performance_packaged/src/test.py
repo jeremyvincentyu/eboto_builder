@@ -1,6 +1,7 @@
 from authority import Authority
 from voter import Voter
 from single_run import single_run
+import json
 
 #Binary Search Function
 def binary_search(min_size: int, max_size: int, all_results:dict[int,float], voter_pool: list[Voter], authority: Authority)->tuple[int,float]:
@@ -66,5 +67,8 @@ def start_test():
     #Start the binary search
     max_size, time_taken = binary_search(0,40, all_results,all_voters, authority_account)
     print(f"Maximum election size that fits within 30 minutes is {max_size}, taking {time_taken} minutes")
+
+    with open("data/test_results.json","w") as results_file:
+        results_file.write(json.dumps(all_results, indent=4))
 
 start_test()
