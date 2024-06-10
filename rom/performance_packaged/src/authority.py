@@ -124,8 +124,8 @@ class Authority:
         
         #Use it to force an election to end
         end_body = {"token": decrypted_token}
-        requests.post(f"http://127.0.0.1/force_end_election/{election_name}", json = end_body)
-
+        end_response = requests.post(f"http://127.0.0.1/force_end_election/{election_name}", json = end_body)
+        print(f"Force End Response: {end_response.text}")
         #Block until the election has actually ended
         election_ended = False
         while not election_ended:
@@ -138,3 +138,21 @@ class Authority:
             #If not yet ended, sleep for 5 seconds
             if not election_ended:
                 sleep(5)
+        
+    def check_force_end(self, election_name: str):
+        #Get an authentication token from the authority daemon
+        authentication_response = requests.get("http://127.0.0.1/get_authority_token")
+        encrypted_token = authentication_response.text
+        
+        #Decrypt the master token
+        decrypted_token = decrypt(self.authority_key,encrypted_token)
+        
+        #Use it to force an election to end
+        end_body = {"token": decrypted_token}
+
+        checker_request = requests.post(f"http://127.0.0.1/check_force_end/{election_name}", json=end_body)
+
+        #Update election_ended
+        election_ended = checker_request.json()
+
+        return election_ended
