@@ -7,9 +7,6 @@ import { create_ballot } from "./create_ballot"
 import EthCrypto from "eth-crypto"
 import { get_public_key } from "./get_public_key"
 import BackBar from "./BackBar"
-import dayjs from "dayjs"
-import post_body from "./post_body"
-
 interface PackedWallet {
     web3: Web3,
     contract: Contract<ContractAbi>,
@@ -120,11 +117,6 @@ interface RolewithChoices {
     choice: number
 }
 
-interface TimeMetrics {
-    address: string,
-    login_time: string,
-    ticket_time: string
-}
 
 interface BallotScreenInterface {
     ethereum_wallet: MutableRefObject<PackedWallet>,
@@ -132,12 +124,10 @@ interface BallotScreenInterface {
     selected_marker: MutableRefObject<string>,
     rolesWithChoices: RolewithChoices[],
     setRolesWithChoices: (newRolesWithChoices: (oldRolesWithChoices: RolewithChoices[]) => RolewithChoices[]) => void,
-    ticket_contents: MutableRefObject<string>,
-    time_metrics: MutableRefObject<TimeMetrics>
+    ticket_contents: MutableRefObject<string>
 
 }
-
-export default function BallotScreenUI({ ethereum_wallet, selected_election, selected_marker, rolesWithChoices, setRolesWithChoices, ticket_contents, time_metrics }: BallotScreenInterface) {
+export default function BallotScreenUI({ ethereum_wallet, selected_election, selected_marker, rolesWithChoices, setRolesWithChoices, ticket_contents }: BallotScreenInterface) {
 
     async function cast_vote() {
         //Gather the Results and Marker
@@ -176,10 +166,7 @@ export default function BallotScreenUI({ ethereum_wallet, selected_election, sel
         ticket_contents.current = JSON.stringify(full_ticket, undefined, 4)
 
         if (recovered_public_key === known_public_key) {
-            time_metrics.current.ticket_time = dayjs().toString()
             //Post the completed metric to the logger
-            const body = JSON.stringify(time_metrics.current)
-            await fetch("/submit_timelog",post_body(body))
 
 
             console.log("Verification Succeeded")
